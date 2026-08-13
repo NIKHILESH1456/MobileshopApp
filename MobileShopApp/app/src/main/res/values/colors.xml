@@ -1,0 +1,11 @@
+<resources>
+    <color name="primary">#2874F0</color>
+    <color name="primary_dark">#1B5FCC</color>
+    <color name="accent">#FB641B</color>
+    <color name="whatsapp_green">#25D366</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#212121</color>
+    <color name="grey_light">#F5F5F5</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="red">#D32F2F</color>
+</resources>
