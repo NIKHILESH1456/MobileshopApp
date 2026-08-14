@@ -1,5 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
 
 android {
     namespace 'com.mobileshop.app'
@@ -41,11 +43,13 @@ dependencies {
     implementation 'androidx.activity:activity:1.8.2'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
 
-    // Firebase
+    // Firebase (Storage removed — Spark plan no longer supports it; images now go to ImgBB instead)
     implementation platform('com.google.firebase:firebase-bom:32.7.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-storage'
+
+    // HTTP client used for uploading images to ImgBB (free image host)
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
     // Image loading
     implementation 'com.github.bumptech.glide:glide:4.16.0'

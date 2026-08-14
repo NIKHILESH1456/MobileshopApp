@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "511726950003",
+    "project_id": "sri-ram-mobile-5615e",
+    "storage_bucket": "sri-ram-mobile-5615e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511726950003:android:c71ed761ebd0b38f4b3c06",
+        "android_client_info": {
+          "package_name": "com.mobileshop.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Ui5Njyj-8hfcA3ZTDWsqcs76uX0J7mA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

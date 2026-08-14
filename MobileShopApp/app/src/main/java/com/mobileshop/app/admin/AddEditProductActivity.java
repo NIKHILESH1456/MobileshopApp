@@ -25,14 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.mobileshop.app.R;
 import com.mobileshop.app.model.Product;
 import com.mobileshop.app.utils.Constants;
-
-import java.util.UUID;
+import com.mobileshop.app.utils.ImgBBUploader;
 
 /**
  * Used both to ADD a new product and to EDIT an existing one.
@@ -151,23 +147,18 @@ public class AddEditProductActivity extends AppCompatActivity {
 
     private void uploadImageThenSave(String name, String description, double price,
                                       String category, String videoUrl, boolean inStock) {
-        String fileName = UUID.randomUUID().toString() + ".jpg";
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
-                .child(Constants.STORAGE_PRODUCT_IMAGES).child(fileName);
+        ImgBBUploader.upload(getContentResolver(), selectedImageUri, new ImgBBUploader.UploadCallback() {
+            @Override
+            public void onSuccess(String imageUrl) {
+                persistProduct(name, description, price, category, videoUrl, inStock, imageUrl);
+            }
 
-        storageRef.putFile(selectedImageUri)
-                .continueWithTask(task -> {
-                    if (!task.isSuccessful() && task.getException() != null) {
-                        throw task.getException();
-                    }
-                    return storageRef.getDownloadUrl();
-                })
-                .addOnSuccessListener((Uri downloadUri) ->
-                        persistProduct(name, description, price, category, videoUrl, inStock, downloadUri.toString()))
-                .addOnFailureListener(e -> {
-                    showLoading(false);
-                    Toast.makeText(this, "Image upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+            @Override
+            public void onFailure(String errorMessage) {
+                showLoading(false);
+                Toast.makeText(AddEditProductActivity.this, "Image upload failed: " + errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void persistProduct(String name, String description, double price, String category,

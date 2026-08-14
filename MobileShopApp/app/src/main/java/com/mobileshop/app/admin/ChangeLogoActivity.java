@@ -21,10 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.mobileshop.app.R;
 import com.mobileshop.app.utils.Constants;
+import com.mobileshop.app.utils.ImgBBUploader;
 
 /**
  * Lets the admin replace the shop logo (shown in the customer app toolbar)
@@ -97,26 +96,24 @@ public class ChangeLogoActivity extends AppCompatActivity {
             return;
         }
         showLoading(true);
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
-                .child(Constants.STORAGE_LOGO).child("logo.jpg");
 
-        storageRef.putFile(selectedLogoUri)
-                .continueWithTask(task -> {
-                    if (!task.isSuccessful() && task.getException() != null) throw task.getException();
-                    return storageRef.getDownloadUrl();
-                })
-                .addOnSuccessListener(downloadUri -> {
-                    FirebaseDatabase.getInstance().getReference(Constants.NODE_SETTINGS)
-                            .child(Constants.SETTINGS_LOGO_URL).setValue(downloadUri.toString())
-                            .addOnCompleteListener(task -> {
-                                showLoading(false);
-                                Toast.makeText(this, "Logo updated", Toast.LENGTH_SHORT).show();
-                            });
-                })
-                .addOnFailureListener(e -> {
-                    showLoading(false);
-                    Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+        ImgBBUploader.upload(getContentResolver(), selectedLogoUri, new ImgBBUploader.UploadCallback() {
+            @Override
+            public void onSuccess(String imageUrl) {
+                FirebaseDatabase.getInstance().getReference(Constants.NODE_SETTINGS)
+                        .child(Constants.SETTINGS_LOGO_URL).setValue(imageUrl)
+                        .addOnCompleteListener(task -> {
+                            showLoading(false);
+                            Toast.makeText(ChangeLogoActivity.this, "Logo updated", Toast.LENGTH_SHORT).show();
+                        });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                showLoading(false);
+                Toast.makeText(ChangeLogoActivity.this, "Upload failed: " + errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void saveWhatsappNumber() {
