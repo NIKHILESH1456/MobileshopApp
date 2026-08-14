@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mobile Zone</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="add_product">Add Product</string>
+    <string name="manage_products">Manage Products</string>
+    <string name="change_logo">Change Logo</string>
+    <string name="view_orders">View Orders</string>
+    <string name="logout">Logout</string>
+    <string name="update_whatsapp_number">Update WhatsApp Number</string>
+    <string name="search_hint">Search mobile accessories…</string>
+    <string name="contact_admin">Contact on WhatsApp</string>
+    <string name="no_products">No products available yet</string>
+</resources>
